@@ -63,7 +63,8 @@ jobs:
       - name: Build
         run: |
           cd /mnt/openwrt
-          sudo bash ../mtk-openwrt-feeds/autobuild/unified/autobuild.sh ${{ github.event.inputs.target || 'filogic-mac80211-mt7988_rfb-mt7996' }} build
+          export FORCE_UNSAFE_CONFIGURE=1
+          sudo -E bash ../mtk-openwrt-feeds/autobuild/unified/autobuild.sh ${{ github.event.inputs.target || 'filogic-mac80211-mt7988_rfb-mt7996' }} build
       
       - name: Save build artifacts
         uses: actions/upload-artifact@v4
