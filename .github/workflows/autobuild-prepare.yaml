@@ -7,6 +7,7 @@ on:
       target:
         description: 'Build Target'
         required: false
+        default: 'filogic-mac80211-mt7988_rfb-mt7996'
   schedule:
     - cron: '0 0 * * *'
 
