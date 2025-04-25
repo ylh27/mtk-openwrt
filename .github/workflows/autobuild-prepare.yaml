@@ -36,11 +36,6 @@ jobs:
           cd /mnt/openwrt
           sudo bash ../mtk-openwrt-feeds/autobuild/unified/autobuild.sh ${{ github.event.inputs.target || 'filogic-mac80211-mt7988_rfb-mt7996' }} prepare
 
-      - name: Clean Feeds
-        run: |
-          cd /mnt/openwrt
-          sudo ./scripts/feeds clean
-
       # avoid permission issues
       - name: Remove .github
         run: |
@@ -65,16 +60,10 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Update Feeds and Install All
-        run: |
-          cd /mnt/openwrt
-          sudo ./scripts/feeds update -a -r
-          sudo ./scripts/feeds install -a
-
       - name: Build
         run: |
           cd /mnt/openwrt
-          sudo make download world -j`nproc`
+          sudo bash ../mtk-openwrt-feeds/autobuild/unified/autobuild.sh ${{ github.event.inputs.target || 'filogic-mac80211-mt7988_rfb-mt7996' }} build
       
       - name: Save build artifacts
         uses: actions/upload-artifact@v4
