@@ -3,6 +3,10 @@ name: Autobuild Prepare
 
 on:
   workflow_dispatch:
+    inputs:
+      target:
+        description: 'Build Target'
+        required: false
   schedule:
     - cron: '0 0 * * *'
 
@@ -30,12 +34,12 @@ jobs:
       - name: Run Autobuild Script
         run: |
           cd /mnt/openwrt
-          export FORCE_UNSAFE_CONFIGURE=1
-          sudo -E bash ../mtk-openwrt-feeds/autobuild/unified/autobuild.sh filogic-mac80211-mt7988_rfb-mt7996 prepare
+          sudo bash ../mtk-openwrt-feeds/autobuild/unified/autobuild.sh ${{ github.event.inputs.target || 'filogic-mac80211-mt7988_rfb-mt7996' }} prepare
 
-      - name: Clean Feeds
+      - name: Clean
         run: |
           cd /mnt/openwrt
+          sudo make clean -j`nproc`
           sudo ./scripts/feeds clean
 
       # avoid permission issues
@@ -57,7 +61,24 @@ jobs:
           cd /mnt/openwrt
           sudo git remote remove origin || true
           sudo git remote add origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
-          sudo git checkout -B filogic-mac80211-mt7988_rfb-mt7996
-          sudo git push origin filogic-mac80211-mt7988_rfb-mt7996 --force
+          sudo git checkout -B ${{ github.event.inputs.target || 'filogic-mac80211-mt7988_rfb-mt7996' }}
+          sudo git push origin ${{ github.event.inputs.target || 'filogic-mac80211-mt7988_rfb-mt7996' }} --force
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Update Feeds and Install All
+        run: |
+          cd /mnt/openwrt
+          sudo ./scripts/feeds update -a -r
+          sudo ./scripts/feeds install -a
+
+      - name: Build
+        run: |
+          cd /mnt/openwrt
+          sudo make download world -j`nproc`
+      
+      - name: Save build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: filogic
+          path: /mnt/openwrt/bin/targets/mediatek/filogic
