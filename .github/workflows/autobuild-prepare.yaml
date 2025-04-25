@@ -38,6 +38,12 @@ jobs:
           cd /mnt/openwrt
           sudo ./scripts/feeds clean
 
+      # avoid permission issues
+      - name: Remove .github
+        run: |
+          cd /mnt/openwrt
+          sudo rm -rf .github
+
       - name: Configure Git and Commit
         run: |
           cd /mnt/openwrt
