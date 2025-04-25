@@ -41,20 +41,22 @@ jobs:
       - name: Clean Feeds
         run: |
           cd /mnt/openwrt
-          sudo ./script/feeds clean
+          sudo ./scripts/feeds clean
 
-      - name: Copy to Repository
-        run: sudo cp -rf /mnt/openwrt/* ./
-
-      - name: Configure Git
+      - name: Configure Git and Commit
         run: |
-          git config --local user.email "github-actions[bot]@users.noreply.github.com"
-          git config --local user.name "github-actions[bot]"
+          cd /mnt/openwrt
+          sudo git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          sudo git config --local user.name "github-actions[bot]"
+          sudo git add --all
+          sudo git commit -m "Prepare from MTK OpenWrt Feeds" 
 
-      - name: Commit and Push
+      - name: Change Origin
         run: |
-          git add --all
-          git commit -m "Prepare from MTK OpenWrt Feeds"
-          git push origin filogic-mac80211-mt7988_rfb-mt7996
+          cd /mnt/openwrt
+          sudo git remote remove origin || true
+          sudo git remote add origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
+          sudo git checkout -B my-branch
+          sudo git push origin filogic-mac80211-mt7988_rfb-mt7996 --force
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
