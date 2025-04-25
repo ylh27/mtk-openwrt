@@ -36,10 +36,9 @@ jobs:
           cd /mnt/openwrt
           sudo bash ../mtk-openwrt-feeds/autobuild/unified/autobuild.sh ${{ github.event.inputs.target || 'filogic-mac80211-mt7988_rfb-mt7996' }} prepare
 
-      - name: Clean
+      - name: Clean Feeds
         run: |
           cd /mnt/openwrt
-          sudo make clean -j`nproc`
           sudo ./scripts/feeds clean
 
       # avoid permission issues
