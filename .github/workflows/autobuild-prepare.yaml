@@ -14,11 +14,6 @@ jobs:
       contents: write
 
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v4
-        with:
-          ref: filogic-mac80211-mt7988_rfb-mt7996
-
       - name: Install Dependencies
         run: |
           sudo apt update
@@ -51,12 +46,12 @@ jobs:
           sudo git add --all
           sudo git commit -m "Prepare from MTK OpenWrt Feeds" 
 
-      - name: Change Origin
+      - name: Change Origin and Push
         run: |
           cd /mnt/openwrt
           sudo git remote remove origin || true
           sudo git remote add origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
-          sudo git checkout -B my-branch
+          sudo git checkout -B filogic-mac80211-mt7988_rfb-mt7996
           sudo git push origin filogic-mac80211-mt7988_rfb-mt7996 --force
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
