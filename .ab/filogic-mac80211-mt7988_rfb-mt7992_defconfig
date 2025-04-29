@@ -1,0 +1,104 @@
+CONFIG_TARGET_mediatek=y
+CONFIG_TARGET_MULTI_PROFILE=y
+CONFIG_TARGET_PER_DEVICE_ROOTFS=y
+CONFIG_TARGET_DEVICE_mediatek_filogic_DEVICE_bananapi_bpi-r4=y
+CONFIG_TARGET_DEVICE_mediatek_filogic_DEVICE_bananapi_bpi-r4-poe=y
+CONFIG_TARGET_DEVICE_mediatek_filogic_DEVICE_mediatek_mt7988a-rfb=y
+CONFIG_TARGET_DEVICE_mediatek_filogic_DEVICE_mediatek_mt7988d-rfb=y
+CONFIG_KERNEL_PROFILING=y
+# CONFIG_KERNEL_DEBUG_INFO_REDUCED is not set
+CONFIG_KERNEL_BPF_EVENTS=y
+# CONFIG_KERNEL_KEYS is not set
+CONFIG_KERNEL_CGROUP_FREEZER=y
+CONFIG_KERNEL_CGROUP_DEVICE=y
+# CONFIG_KERNEL_MEMCG_SWAP is not set
+# CONFIG_KERNEL_CFS_BANDWIDTH is not set
+# CONFIG_KERNEL_BLK_DEV_THROTTLING is not set
+CONFIG_KERNEL_NET_CLS_CGROUP=y
+CONFIG_USE_GC_SECTIONS=y
+CONFIG_USE_LTO=y
+CONFIG_USE_MOLD=y
+CONFIG_DEVEL=y
+CONFIG_PACKAGE_blockd=y
+CONFIG_BUSYBOX_CUSTOM=y
+CONFIG_BUSYBOX_CONFIG_LSPCI=y
+CONFIG_BUSYBOX_CONFIG_LSUSB=y
+CONFIG_BUSYBOX_CONFIG_TFTP=y
+CONFIG_BUSYBOX_CONFIG_FEATURE_TFTP_GET=y
+CONFIG_BUSYBOX_CONFIG_FEATURE_TFTP_PUT=y
+CONFIG_BUSYBOX_CONFIG_VCONFIG=y
+CONFIG_BUSYBOX_CONFIG_MPSTAT=y
+# CONFIG_DROPBEAR_ED25519 is not set
+# CONFIG_PACKAGE_trusted-firmware-a-mt7981-ram-ddr3 is not set
+# CONFIG_PACKAGE_trusted-firmware-a-mt7981-ram-ddr4 is not set
+# CONFIG_PACKAGE_trusted-firmware-a-mt7986-ram-ddr3 is not set
+# CONFIG_PACKAGE_trusted-firmware-a-mt7986-ram-ddr4 is not set
+# CONFIG_PACKAGE_trusted-firmware-a-mt7988-ram-comb is not set
+CONFIG_PACKAGE_flex=m
+CONFIG_PACKAGE_mt76-test=y
+CONFIG_PACKAGE_perf=y
+CONFIG_PACKAGE_aqr10g-phy-firmware=y
+CONFIG_PACKAGE_mt7988-wo-firmware=y
+CONFIG_PACKAGE_mt798x-2p5g-phy-firmware-internal=y
+CONFIG_PACKAGE_kmod-ata-core=y
+CONFIG_PACKAGE_kmod-scsi-generic=y
+CONFIG_PACKAGE_kmod-fs-exfat=y
+CONFIG_PACKAGE_kmod-fs-ext4=y
+CONFIG_PACKAGE_kmod-fs-msdos=y
+CONFIG_PACKAGE_kmod-fs-nfsd=y
+CONFIG_PACKAGE_kmod-fs-ntfs3=y
+CONFIG_PACKAGE_kmod-hwmon-pwmfan=y
+CONFIG_PACKAGE_kmod-i2c-gpio=y
+CONFIG_PACKAGE_kmod-i2c-mux-pca954x=y
+CONFIG_PACKAGE_kmod-br-netfilter=y
+CONFIG_PACKAGE_kmod-ipt-extra=y
+CONFIG_PACKAGE_kmod-ipt-nat=y
+CONFIG_PACKAGE_kmod-ipt-offload=y
+CONFIG_PACKAGE_kmod-phy-airoha-an8801sb=y
+CONFIG_PACKAGE_kmod-phy-airoha-en8811h=y
+CONFIG_PACKAGE_kmod-phy-marvell=y
+CONFIG_PACKAGE_kmod-phy-marvell-10g=y
+CONFIG_PACKAGE_kmod-sfp=y
+CONFIG_PACKAGE_kmod-eeprom-at24=y
+CONFIG_PACKAGE_kmod-rtc-pcf8563=y
+CONFIG_PACKAGE_kmod-usb-storage-extras=y
+CONFIG_PACKAGE_kmod-usb-storage-uas=y
+CONFIG_PACKAGE_kmod-usb3=y
+CONFIG_PACKAGE_CFG80211_TESTMODE=y
+CONFIG_PACKAGE_kmod-mt7992-23-firmware=y
+CONFIG_PACKAGE_kmod-mt7992-firmware=y
+CONFIG_PACKAGE_libmount=y
+CONFIG_PACKAGE_luci=y
+CONFIG_PACKAGE_luci-compat=y
+CONFIG_PACKAGE_luci-app-ksmbd=y
+CONFIG_PACKAGE_luci-app-omcproxy=y
+CONFIG_PACKAGE_atenl=y
+CONFIG_PACKAGE_mii_mgr=y
+CONFIG_PACKAGE_regs=y
+CONFIG_PACKAGE_switch=y
+CONFIG_PACKAGE_mtk_factory_rw=y
+CONFIG_PACKAGE_netsys_dbg_util=y
+CONFIG_PACKAGE_lftp=y
+CONFIG_PACKAGE_ip6tables-zz-legacy=y
+CONFIG_PACKAGE_iptables-mod-conntrack-extra=y
+CONFIG_PACKAGE_iptables-mod-ipopt=y
+CONFIG_PACKAGE_iptables-zz-legacy=y
+CONFIG_PACKAGE_ip-bridge=y
+CONFIG_PACKAGE_ip-full=y
+CONFIG_PACKAGE_xl2tpd=y
+CONFIG_PACKAGE_afcd=y
+CONFIG_PACKAGE_hostapd-utils=y
+CONFIG_PACKAGE_wpa-cli=y
+CONFIG_WPA_MSG_MIN_PRIORITY=2
+CONFIG_PACKAGE_ethtool=y
+CONFIG_PACKAGE_iperf3=y
+CONFIG_PACKAGE_iw-full=y
+CONFIG_PACKAGE_mtkhnat_util=y
+CONFIG_PACKAGE_ppp-mod-pptp=y
+CONFIG_PACKAGE_smp_util=y
+CONFIG_PACKAGE_tcpdump=y
+CONFIG_PACKAGE_blkid=y
+CONFIG_PACKAGE_e2fsprogs=y
+CONFIG_PACKAGE_f2fsck=y
+CONFIG_PACKAGE_mkf2fs=y
+CONFIG_PACKAGE_spidev-test=y
