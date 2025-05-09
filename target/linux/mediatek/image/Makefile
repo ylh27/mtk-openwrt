@@ -34,9 +34,33 @@ define Device/Default
 endef
 
 include $(SUBTARGET).mk
+-include $(SUBTARGET)-extra.mk
 
 define Image/Build
 	$(call Image/Build/$(1),$(1))
+endef
+
+define Build/append-opteenode
+	LD_LIBRARY_PATH=$(STAGING_DIR_HOSTPKG)/lib \
+	fdtput $(KDIR)/image-$(firstword $(DEVICE_DTS)).dtb "/reserved-memory/secmon@43000000" \
+		-tx reg 0 0x43000000 0 $(shell printf "%#x" $$((0x570000 \
+		$(if $(CONFIG_OPTEE_CORE_RESERVED_SHMEM),+ $(CONFIG_OPTEE_RESERVED_SHMEM_SIZE),))))
+endef
+
+# build squashfs-hashed
+define Build/squashfs-hashed
+	$(TOPDIR)/scripts/make-squashfs-hashed.sh \
+		$(ROOTFS/$(FILESYSTEMS)/$(DEVICE_NAME)) \
+		$(STAGING_DIR_HOSTPKG) \
+		$(TOPDIR) \
+		$(ROOTFS/$(FILESYSTEMS)/$(DEVICE_NAME))-hashed-summary
+	fdt-patch-dm-verify $(ROOTFS/$(FILESYSTEMS)/$(DEVICE_NAME))-hashed-summary \
+		$(KDIR)/image-$(firstword $(DEVICE_DTS)).dtb $(KDIR)/image-$(firstword $(DEVICE_DTS)).dtb
+endef
+
+define Build/secure-boot
+	$(if $(CONFIG_MTK_SECURE_BOOT),$(call Build/squashfs-hashed))
+	$(if $(CONFIG_PACKAGE_optee-mediatek),$(call Build/append-opteenode))
 endef
 
 $(eval $(call BuildImage))
