@@ -1,5 +1,5 @@
 # Run mtk-openwrt-feeds autobuild script for prepare
-name: Autobuild Prepare
+name: MTK Feeds Autobuild
 
 on:
   workflow_dispatch:
