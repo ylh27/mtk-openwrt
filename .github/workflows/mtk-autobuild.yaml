@@ -37,30 +37,6 @@ jobs:
           cd /mnt/openwrt
           sudo bash ../mtk-openwrt-feeds/autobuild/unified/autobuild.sh ${{ github.event.inputs.target || 'filogic-mac80211-mt7988_rfb-mt7996' }} prepare
 
-      # avoid permission issues
-      - name: Remove .github
-        run: |
-          cd /mnt/openwrt
-          sudo rm -rf .github
-
-      - name: Configure Git and Commit
-        run: |
-          cd /mnt/openwrt
-          sudo git config --local user.email "github-actions[bot]@users.noreply.github.com"
-          sudo git config --local user.name "github-actions[bot]"
-          sudo git add --all
-          sudo git commit -m "Prepare from MTK OpenWrt Feeds" 
-
-      - name: Change Origin and Push
-        run: |
-          cd /mnt/openwrt
-          sudo git remote remove origin || true
-          sudo git remote add origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
-          sudo git checkout -B ${{ github.event.inputs.target || 'filogic-mac80211-mt7988_rfb-mt7996' }}
-          sudo git push origin ${{ github.event.inputs.target || 'filogic-mac80211-mt7988_rfb-mt7996' }} --force
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
       - name: Run Autobuild
         run: |
           cd /mnt/openwrt
@@ -72,9 +48,3 @@ jobs:
         with:
           name: filogic
           path: /mnt/openwrt/bin/targets/mediatek/filogic
-
-      - name: Save Build Toolchain
-        uses: actions/upload-artifact@v4
-        with:
-          name: staging_dir
-          path: /mnt/openwrt/staging_dir
