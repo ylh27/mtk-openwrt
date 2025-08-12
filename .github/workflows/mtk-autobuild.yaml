@@ -32,19 +32,37 @@ jobs:
       - name: Clone mtk-openwrt-feeds
         run: sudo git clone --branch master https://git01.mediatek.com/openwrt/feeds/mtk-openwrt-feeds /mnt/mtk-openwrt-feeds
 
-      - name: Run Autobuild Prepare Script
+      - name: Run Autobuild Script
         run: |
           cd /mnt/openwrt
-          sudo bash ../mtk-openwrt-feeds/autobuild/unified/autobuild.sh ${{ github.event.inputs.target || 'filogic-mac80211-mt7988_rfb-mt7996' }} prepare
-
-      - name: Run Autobuild
-        run: |
-          cd /mnt/openwrt
-          export FORCE_UNSAFE_CONFIGURE=1
-          sudo -E bash ../mtk-openwrt-feeds/autobuild/unified/autobuild.sh ${{ github.event.inputs.target || 'filogic-mac80211-mt7988_rfb-mt7996' }} build
+          sudo bash ../mtk-openwrt-feeds/autobuild/unified/autobuild.sh ${{ github.event.inputs.target || 'filogic-mac80211-mt7988_rfb-mt7996' }}
       
       - name: Save Image
         uses: actions/upload-artifact@v4
         with:
-          name: filogic
+          name: mtk-default
+          path: /mnt/openwrt/bin/targets/mediatek/filogic
+
+      - name: Enable Python3
+        run: echo "CONFIG_PACKAGE_python3=y" >> /mnt/openwrt/.config
+
+      - name: Enable iPerf3
+        run: echo "CONFIG_PACKAGE_iperf3=y" >> /mnt/openwrt/.config
+
+      - name: Enable SFTP Server
+        run: echo "CONFIG_PACKAGE_openssh-sftp-server=y" >> /mnt/openwrt/.config
+
+      - name: Enable Git
+        run: echo "CONFIG_PACKAGE_git-http=y" >> /mnt/openwrt/.config
+
+      - name: Save Config and Compile
+        run: |
+          cd /mnt/openwrt
+          sudo make defconfig
+          sudo make V=s -j`nproc`
+
+      - name: Save Image
+        uses: actions/upload-artifact@v4
+        with:
+          name: custom
           path: /mnt/openwrt/bin/targets/mediatek/filogic
