@@ -32,15 +32,11 @@ jobs:
       - name: Clone mtk-openwrt-feeds
         run: sudo git clone --branch master https://git01.mediatek.com/openwrt/feeds/mtk-openwrt-feeds /mnt/mtk-openwrt-feeds
 
-      - name: Run Autobuild Prepare
+      - name: Run Autobuild Script
         run: |
           cd /mnt/openwrt
-          sudo bash ../mtk-openwrt-feeds/autobuild/unified/autobuild.sh ${{ github.event.inputs.target || 'filogic-mac80211-mt7988_rfb-mt7996' }} prepare
-
-      - name: Run Autobuild
-        run: |
-          cd /mnt/openwrt
-          sudo bash ../mtk-openwrt-feeds/autobuild/unified/autobuild.sh ${{ github.event.inputs.target || 'filogic-mac80211-mt7988_rfb-mt7996' }} build
+          export FORCE_UNSAFE_CONFIGURE=1
+          sudo -E bash ../mtk-openwrt-feeds/autobuild/unified/autobuild.sh ${{ github.event.inputs.target || 'filogic-mac80211-mt7988_rfb-mt7996' }}
       
       - name: Save Image
         uses: actions/upload-artifact@v4
@@ -63,8 +59,9 @@ jobs:
       - name: Save Config and Compile
         run: |
           cd /mnt/openwrt
-          sudo make defconfig
-          sudo make V=s -j`nproc`
+          export FORCE_UNSAFE_CONFIGURE=1
+          sudo -E make defconfig
+          sudo -E make V=s -j`nproc`
 
       - name: Save Image
         uses: actions/upload-artifact@v4
