@@ -44,17 +44,15 @@ jobs:
           name: mtk-default
           path: /mnt/openwrt/bin/targets/mediatek/filogic
 
-      - name: Enable Python3
-        run: sudo echo "CONFIG_PACKAGE_python3=y" >> /mnt/openwrt/.config
-
-      - name: Enable iPerf3
-        run: sudo echo "CONFIG_PACKAGE_iperf3=y" >> /mnt/openwrt/.config
-
-      - name: Enable SFTP Server
-        run: sudo echo "CONFIG_PACKAGE_openssh-sftp-server=y" >> /mnt/openwrt/.config
-
-      - name: Enable Git
-        run: sudo echo "CONFIG_PACKAGE_git-http=y" >> /mnt/openwrt/.config
+      - name: Customize Firmware Configuration
+        working-directory: /mnt/openwrt
+        run: |
+          {
+            echo "CONFIG_PACKAGE_python3=y"
+            echo "CONFIG_PACKAGE_iperf3=y"
+            echo "CONFIG_PACKAGE_openssh-sftp-server=y"
+            echo "CONFIG_PACKAGE_git-http=y"
+          } | sudo tee -a .config
 
       - name: Save Config and Compile
         run: |
